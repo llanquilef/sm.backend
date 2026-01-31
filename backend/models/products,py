@@ -29,6 +29,7 @@ class ProductsFK(ProductBase):
     Clase ProductsFK: Esta clase define las FK's de el modelo base (ProductBase)
     Class ProductsFK: This class defines FK's over the class ProductBase
     """
+    super.__init__()
     companyId: uuid.UUID = Field(foreign_key=CompanyBase.id)
     supplierId: uuid.UUID = Field(foreign_key=SupplierBase.id)
         

@@ -1,4 +1,4 @@
-from sqlmodel import SQLModel, Field
+from sqlmodel import SQLModel, Field, Relationship
 from models.company import CompanyBase
 from models.supplier import SupplierBase
 from utils.timestamps.DateTimeToUTC import get_time_to_utc
@@ -30,21 +30,18 @@ class ProductsFK(ProductBase):
     Class ProductsFK: This class defines FK's over the class ProductBase
     """
     super.__init__()
-    companyId: uuid.UUID = Field(foreign_key=CompanyBase.id)
-    supplierId: uuid.UUID = Field(foreign_key=SupplierBase.id)
+    companyId: uuid.UUID = Relationship(CompanyBase.id, cascade_delete=True)
+    supplierId: uuid.UUID = Relationship(SupplierBase.id, cascade_delete=True)
         
 class ProductCreate(ProductBase):
-    """ Clase ProductsFK: Esta clase trae todos los atributos de su padre a traves de la herencia  BaseMode
-        Class ProductsFK: Tihs class brings all the atributtes from his father across herency.
-    """
     super.__init__()
     createdAt: datetime = Field(default_factory=get_time_to_utc, nullable=False)
     isActive: bool = Field(default=True, nullable=False)
 
-class ProductUpdate(ProductBase and ProductCreate):
+class ProductUpdate(ProductBase):
     super.__init__()
-    pass
+    pass 
 
-class ProductRead(ProductBase and ProductUpdate, ProductCreate):
+class ProductRead(ProductBase and ProductCreate):
     super.__init__()
     pass  

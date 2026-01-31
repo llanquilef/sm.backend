@@ -1,6 +1,6 @@
 from sqlmodel import SQLModel, Field
 from datetime import datetime
-from utils.timestamps.DateTimeToUTC import getTimeToUTC
+from utils.timestamps.DateTimeToUTC import get_time_to_utc
 import uuid
 
 # Base Company Class Model - Clase Base Empresa (Company)
@@ -11,14 +11,14 @@ class CompanyBase(SQLModel):
 
 # Write Company Class - Clase Crear Empresa (Company)
 class CompanyCreate(CompanyBase):
-    createdAt: datetime | None = Field(default_factory=getTimeToUTC)
+    createdAt: datetime | None = Field(default_factory=get_time_to_utc)
 
 # Update Company Class
 class CompanyUpdate(CompanyBase):
-    updatedAt: datetime | None = Field(default_factory=getTimeToUTC)
+    updatedAt: datetime | None = Field(default_factory=get_time_to_utc)
 
 class CompanyDelete(CompanyBase): 
-    deletedAt: datetime | None = Field(default_factory=getTimeToUTC)
+    deletedAt: datetime | None = Field(default_factory=get_time_to_utc)
     isDeleted: bool = Field(default=True)
     
 # Read Company Class 

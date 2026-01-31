@@ -1,6 +1,6 @@
 from sqlmodel import SQLModel, Field
 import uuid
-from utils.timestamps.DateTimeToUTC import getTimeToUTC
+from utils.timestamps.DateTimeToUTC import get_time_to_utc
 from models.company import CompanyBase
 from datetime import datetime 
 
@@ -16,10 +16,10 @@ class ContactBase(SQLModel):
 class ContactCreate(ContactBase):
     #userId: uuid.UUID = Field(foreign_key=True)
     companyId: uuid.UUID = Field(foreign_key=CompanyBase.id)
-    createdAt: datetime = Field(default_factory=getTimeToUTC)
+    createdAt: datetime = Field(default_factory=get_time_to_utc)
     
 class ContactUpdate(ContactBase):
-    updatedAt: datetime = Field(default_factory=getTimeToUTC)    
+    updatedAt: datetime = Field(default_factory=get_time_to_utc)    
 
 class ContactNotes(ContactBase):
     notes: str = Field(max_length=1000)

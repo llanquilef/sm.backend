@@ -2,7 +2,7 @@ from sqlmodel import Field, SQLModel
 from datetime import datetime
 from models.company import CompanyBase as BaseCompany
 from models.plan import PlanBase
-from utils.timestamps.DateTimeToUTC import getTimeToUTC
+from utils.timestamps.DateTimeToUTC import get_time_to_utc
 import uuid
 
 def __init__(self, subscription: dict):
@@ -19,8 +19,8 @@ class SubscriptionBase(SQLModel):
     
 class SubscritionCreate(SubscriptionBase):
     super.__init__()
-    ds: datetime | None = Field(default_factory=getTimeToUTC, nullable=False)
-    de: datetime | None = Field(default_factory=getTimeToUTC, nullable=False)
+    ds: datetime | None = Field(default_factory=get_time_to_utc, nullable=False)
+    de: datetime | None = Field(default_factory=get_time_to_utc, nullable=False)
 
 class SubscriptionRead(SubscriptionBase and SubscritionCreate):
     super.__init__()

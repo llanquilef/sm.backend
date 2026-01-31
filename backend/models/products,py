@@ -30,8 +30,8 @@ class ProductsFK(ProductBase):
     Class ProductsFK: This class defines FK's over the class ProductBase
     """
     super.__init__()
-    companyId: uuid.UUID = Relationship(CompanyBase.id, cascade_delete=True)
-    supplierId: uuid.UUID = Relationship(SupplierBase.id, cascade_delete=True)
+    companyId: uuid.UUID = Relationship(CompanyBase.id, cascade_delete=True, link_model=CompanyBase)
+    supplierId: uuid.UUID = Relationship(SupplierBase.id, cascade_delete=True, link_model=SupplierBase)
         
 class ProductCreate(ProductBase):
     super.__init__()
@@ -40,8 +40,10 @@ class ProductCreate(ProductBase):
 
 class ProductUpdate(ProductBase):
     super.__init__()
-    pass 
+    updatedAt: datetime = Field(default_factory=get_time_to_utc)
 
-class ProductRead(ProductBase and ProductCreate):
+class ProductRead(ProductBase):
     super.__init__()
-    pass  
+
+
+

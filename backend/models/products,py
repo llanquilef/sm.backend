@@ -1,0 +1,41 @@
+from sqlmodel import SQLModel, Field
+from models.company import CompanyBase
+from models.supplier import SupplierBase
+from utils.timestamps.DateTimeToUTC import get_time_to_utc
+from datetime import datetime
+import uuid
+
+
+UNIS_ENUMS = ['kg','un','gr','litro','ml','paq','caja','bot']
+
+
+class ProductBase(SQLModel):
+    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    name: str = Field(max_length=100)
+    companyId: uuid.UUID = Field(foreign_key=CompanyBase.id)
+    description: str = Field(max_length=100)
+    sku: str = Field(max_length=50)
+    stockQuantity: int = Field(default=0)
+    unit : enumerate = Field(default=UNIS_ENUMS[0], nullable=False)
+    buyPrice: float = Field(default=0.0)
+    salePrice: float = Field(default=0.0, nullable=True)
+    minStockLevel: int = Field(default=0.0)
+    supplierId: uuid.UUID = Field(foreign_key=SupplierBase.id)
+    profitMargin: float = Field(default=0.0)
+    
+class ProductsFK(ProductBase):
+     
+    
+    
+class ProductCreate(ProductBase):
+    super.__init__()
+    createdAt: datetime = Field(default_factory=get_time_to_utc, nullable=False)
+    isActive: bool = Field(default=True, nullable=False)
+
+class ProductUpdate(ProductBase and ProductCreate):
+    super.__init__()
+    pass
+
+class ProductRead(ProductBase and ProductUpdate, ProductCreate):
+    super.__init__()
+    pass  

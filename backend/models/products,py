@@ -10,9 +10,11 @@ UNIS_ENUMS = ['kg','un','gr','litro','ml','paq','caja','bot']
 
 
 class ProductBase(SQLModel):
+    """" Clase ProductsBase: Define los parametros esenciales para el modelo Product.  
+         Class ProductsBase: Defines parameters over the ProductsBase model.
+    """
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
     name: str = Field(max_length=100)
-    companyId: uuid.UUID = Field(foreign_key=CompanyBase.id)
     description: str = Field(max_length=100)
     sku: str = Field(max_length=50)
     stockQuantity: int = Field(default=0)
@@ -20,14 +22,21 @@ class ProductBase(SQLModel):
     buyPrice: float = Field(default=0.0)
     salePrice: float = Field(default=0.0, nullable=True)
     minStockLevel: int = Field(default=0.0)
-    supplierId: uuid.UUID = Field(foreign_key=SupplierBase.id)
     profitMargin: float = Field(default=0.0)
     
 class ProductsFK(ProductBase):
-     
-    
-    
+    """ 
+    Clase ProductsFK: Esta clase define las FK's de el modelo base (ProductBase)
+    Class ProductsFK: This class defines FK's over the class ProductBase
+    """
+    super.__init__()
+    companyId: uuid.UUID = Field(foreign_key=CompanyBase.id)
+    supplierId: uuid.UUID = Field(foreign_key=SupplierBase.id)
+        
 class ProductCreate(ProductBase):
+    """ Clase ProductsFK: Esta clase trae todos los atributos de su padre a traves de la herencia  BaseMode
+        Class ProductsFK: Tihs class brings all the atributtes from his father across herency.
+    """
     super.__init__()
     createdAt: datetime = Field(default_factory=get_time_to_utc, nullable=False)
     isActive: bool = Field(default=True, nullable=False)

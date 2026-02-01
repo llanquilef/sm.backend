@@ -13,12 +13,12 @@ class TreeNode():
         """ El padre queda como un valor vacio """
         self.parent = None
         
-    def add_child(self, child):
+    def add_child(self, child) -> object:
         """ Aqui se agrega a la lista children su hijo CompanyCategories """
         self.children.append(child)
         return child
     
-    def build_tree(self) -> None:
+    def build_tree(self) -> object:
         """
         Funcion build_tree 
         """

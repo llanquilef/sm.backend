@@ -34,7 +34,6 @@ class AdditionalServiceRead(AdditionalServiceBase and AdditionalServiceCreate an
                         generar esa variable o crear una funcon auxiliar 
     """
     super.__init__()
-    pass
      
 
 class AdditionalService(AdditionalServiceRead):
@@ -42,7 +41,6 @@ class AdditionalService(AdditionalServiceRead):
     Class AdditionalService() - Clase AdditionalService
     """
     super.__init__()
-    pass 
 
 
     

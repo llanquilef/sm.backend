@@ -1,4 +1,4 @@
-from models.products import ProductBase, ProductCategories, ProductFoodCategory, ProductToolCategory
+from models.products import ProductBase, ProductCategories, ProductFoodCategory, ProductToolCategory, ProductStatus
 
 class TreeNode():
     def __init__(self, data) -> None: 
@@ -16,5 +16,7 @@ class TreeNode():
         product_categories = TreeNode(ProductCategories)
         product_categories.add_child(ProductFoodCategory)
         product_categories.add_child(ProductToolCategory)
+        product_status = TreeNode(ProductBase)
+        product_status.add_child(ProductStatus)
         
         return base_root, product_categories

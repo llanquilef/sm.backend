@@ -12,7 +12,24 @@ class ProductBase(SQLModel):
     id: uuid.UUID = Field(primary_key=True, nullable=False)
     name: str = Field(max_length=100, nullable=False)
     description: str = Field(max_length=400)
+
+class ProductCategories():
+    """ Se define clase ProductCategories que hereda desde su padre en arbol con la funcion add_child() """ 
+    name: str = Field(nullable=False)
+
+class ProductStatus():
+    """ Se define clase ProductStatus que hereda desde su padre en arbol ProductBase"""" 
+    status: bool = Field(default=True)
     
+class ProductFoodCategory():
+    """ Se define clase ProductFood Categories que lo recibe desde su nodo padre(2) -> ProductCategories """
+    hasFifoRules: bool = Field(default=False)
+    
+class ProductToolCategory():
+    """ Se define clase ProductToolCategory como hijo de ProductCategories """ 
+    pass
+    
+       
 # JSON NO A LA BD POR FAVOR 
 #featuresJSON = {
 #    'Control Stock Inventario': 0,

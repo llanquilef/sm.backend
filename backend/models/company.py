@@ -9,19 +9,28 @@ class CompanyBase(SQLModel):
     name: str = Field(max_length=100)
     schema: str = Field(max_length=100)
 
+class CompanyCategories(CompanyBase):
+    """ Class Company Categories Hijo de CompanyBase """
+    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    name: str = Field(max_length=100)
+    
 # Write Company Class - Clase Crear Empresa (Company)
 class CompanyCreate(CompanyBase):
+    """ """
+    super.__init__()
     createdAt: datetime | None = Field(default_factory=get_time_to_utc)
 
 # Update Company Class
 class CompanyUpdate(CompanyBase):
+    """ """
+    super.__init__()
     updatedAt: datetime | None = Field(default_factory=get_time_to_utc)
 
-class CompanyDelete(CompanyBase): 
+class CompanyDelete(CompanyBase):
+    super.__init__() 
     deletedAt: datetime | None = Field(default_factory=get_time_to_utc)
     isDeleted: bool = Field(default=True)
     
 # Read Company Class 
 class CompanyRead(CompanyBase and CompanyCreate and CompanyUpdate and CompanyDelete):
-    pass
-
+    super.__init__()

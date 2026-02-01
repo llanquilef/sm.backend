@@ -39,7 +39,6 @@ class SubscriptionRead(SubscriptionBase):
     
 class Subscription(SubscriptionRead):
     super.__int__()
-    pass
 
 
      

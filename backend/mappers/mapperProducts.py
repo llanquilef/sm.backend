@@ -1,5 +1,6 @@
 from models.products import ProductBase, ProductCreate
 from utils.timestamps.DateTimeToUTC import get_time_to_utc
+
 class Mapper:
     """ """
         
@@ -12,11 +13,11 @@ class Mapper:
         'id': ProductBase.id, 
         'name': ProductBase.name,
         'description': ProductBase.description,
+        ''
         
         #'companyId': ProductBase.
         # ProductCreate
-        'unit': ProductBase.unit, 
-        ''
+        
         }
     
     """

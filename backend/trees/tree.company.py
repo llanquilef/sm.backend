@@ -24,6 +24,12 @@ class TreeNode():
         """
         root = TreeNode(CompanyBase)
         root.add_child(CompanyCategories)
+        """ Aqui debo agregar un nodo nuevo para las categorias de productos -> Dos hijos por nodo """
+        # root = TreeNode(CompanyCategories)
+        # root.add_child(CompanyCategorizedBySize)
+        # root.add_child(CompanyCategorizedByBussinessLine)
+        # by size 
+        # by bussiness line         
         return root
     
     

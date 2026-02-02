@@ -2,7 +2,7 @@ from sqlmodel import SQLModel, Field
 from datetime import datetime
 from utils.timestamps.DateTimeToUTC import get_time_to_utc
 import uuid
-
+from lists.featuresPlanList import featuresList
 
 class PlanBase(SQLModel):
     """ BASE PLAN CLASS """
@@ -45,14 +45,12 @@ class PlanFeatures(PlanBase and PlanCreate):
     max_warehouses: int | None = Field(nullable=False)
     """ Cantidad Maxima de Usuarios"""
     max_users: int | None = Field(nullable=False)    
-    pass
+    features: list = Field(featuresList, nullable=False)
 
 class PlanRead(PlanBase and PlanCreate and PlanUpdate):
     """" """
     super.__init__()
-    pass
 
 class Plan(PlanRead): 
     """"""
     super.__init__()
-    pass 

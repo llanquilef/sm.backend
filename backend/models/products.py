@@ -1,18 +1,28 @@
-from sqlmodel import SQLModel, Field 
+from sqlmodel import SQLModel, Field, Relationship
 import uuid
 from utils.timestamps.DateTimeToUTC import get_time_to_utc
 from models.company import CompanyBase
 from models.supplier import SupplierBase
 import datetime 
 
-class ProductBase(SQLModel):
-    """ Clase ProductBase: Define clase base de Products
-        ProductBase Class: Define base class of products
-    """
-    id: uuid.UUID = Field(primary_key=True, nullable=False)
-    name: str = Field(max_length=100, nullable=False)
-    description: str = Field(max_length=400)
+UNITS_ENUMS = ['kg', 'un', 'gr', 'litro', 'ml', 'caja']
 
+class ProductBase(SQLModel):
+    """ 
+    Clase ProductBase: Define clase base de Products
+    ProductBase Class: Define base class of products
+    """
+    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True, nullable=False)
+    name: str = Field(max_length=100, nullable=False)
+    description: str = Field(max_length=400, nullable=True)
+    sku: str = Field(default=0, nullable=False)
+    stockQuantity: int = Field(default=0, nullable=False)
+    unit: enumerate = Field(default=UNITS_ENUMS[0], nullable=False)
+    buyPrice: float = Field(default=0.0, nullable=False)
+    salePrice: float = Field(default=0.0, nullable=False)
+    minStockLevel: int = Field(default=0, nullable=True)
+    profitMargin: float = Field(default=0.0, nullable=True)
+     
 class ProductCategories():
     """ Se define clase ProductCategories que hereda desde su padre en arbol con la funcion add_child() """ 
     name: str = Field(nullable=False)
@@ -27,34 +37,11 @@ class ProductFoodCategory():
     
 class ProductToolCategory():
     """ Se define clase ProductToolCategory como hijo de ProductCategories """ 
-    pass
     
-       
-# JSON NO A LA BD POR FAVOR 
-#featuresJSON = {
-#    'Control Stock Inventario': 0,
-#    'Boletas y Facturas Electronicas': 1,
-#    'Punto de Venta POS': 2,
-#    'Contactos': 4,
-#    'Gestion Proveedores': 5,
-#    'Notas Ventas': 6, 
-#    'Ordenes de Compra': 7,
-#    'Impuestos Adicionales': 8, 
-#    'Facturas de Compra': 9
-#    }
-
-#featuresList = [
-#    'Boletas y Facturas Electronicas',
-#    'Control Stock Inventario' 
-#    'Punto de Venta POS'
-#    'Contactos'
-#    'Gestion de Proveedores'
-#    'Notas de Venta' 
-#]
 class ProductFK(ProductBase): 
     super.__init__()
-    companyId: uuid.UUID = Field(foreign_key=CompanyBase.id) 
-    supplierId: uuid.UUID = Field(foreign_key=SupplierBase.id)
+    companyId: uuid.UUID = Relationship(CompanyBase.id) 
+    supplierId: uuid.UUID = Relationship(SupplierBase.id)
 
 class ProductCreate(ProductBase):
     super.__init__()

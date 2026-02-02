@@ -13,10 +13,4 @@ class TreeNode():
     def build_tree(self) -> object: 
         base_root = TreeNode(ProductBase)
         base_root.add_child(ProductCategories)
-        product_categories = TreeNode(ProductCategories)
-        product_categories.add_child(ProductFoodCategory)
-        product_categories.add_child(ProductToolCategory)
-        product_status = TreeNode(ProductBase)
-        product_status.add_child(ProductStatus)
-        
-        return base_root, product_categories
+        return base_root

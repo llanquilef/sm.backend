@@ -1,17 +1,18 @@
-from sqlmodel import SQLModel, Field 
 import uuid
+from sqlalchemy import Column, String, Integer, Numeric
+from sqlalchemy.dialects.postgresql import UUID
+from models.base import Base
 from utils.timestamps.DateTimeToUTC import get_time_to_utc
 from models.company import CompanyBase
 from models.supplier import SupplierBase
-import datetime 
 
-class ProductBase(SQLModel):
+class ProductBase(Base):
     """ Clase ProductBase: Define clase base de Products
         ProductBase Class: Define base class of products
     """
-    id: uuid.UUID = Field(primary_key=True, nullable=False)
-    name: str = Field(max_length=100, nullable=False)
-    description: str = Field(max_length=400)
+    id = Column(UUID(as_uuid=True), primary_key=True, nullable=False)
+    name = Column(String(100), nullable=False)
+    description = Column(String(400), nullable=True)
     
 # JSON NO A LA BD POR FAVOR 
 #featuresJSON = {
@@ -51,6 +52,5 @@ class ProductUpdate(ProductBase):
     
 class ProductDelete(ProductBase):
     """ Clase ProductDelete:  """
-    super.__init__()
     deletedAt: datetime = Field(default_factory=get_time_to_utc)
 

@@ -1,36 +1,14 @@
-from sqlmodel import SQLModel, Field
-from datetime import datetime
+""" """
+from sqlalchemy import Column, DateTime, String
+from sqlalchemy.dialects.postgresql import UUID
+from models.base import Base
 from utils.timestamps.DateTimeToUTC import get_time_to_utc
-import uuid
 
 # Base Company Class Model - Clase Base Empresa (Company)
-class CompanyBase(SQLModel): 
-    id:  uuid.UUID = Field(default_factory= uuid.uuid4, primary_key=True)
-    name: str = Field(max_length=100)
-    schema: str = Field(max_length=100)
-
-class CompanyCategories(CompanyBase):
-    """ Class Company Categories Hijo de CompanyBase """
-    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
-    name: str = Field(max_length=100)
-    
-# Write Company Class - Clase Crear Empresa (Company)
-class CompanyCreate(CompanyBase):
-    """ """
-    super.__init__()
-    createdAt: datetime | None = Field(default_factory=get_time_to_utc)
-
-# Update Company Class
-class CompanyUpdate(CompanyBase):
-    """ """
-    super.__init__()
-    updatedAt: datetime | None = Field(default_factory=get_time_to_utc)
-
-class CompanyDelete(CompanyBase):
-    super.__init__() 
-    deletedAt: datetime | None = Field(default_factory=get_time_to_utc)
-    isDeleted: bool = Field(default=True)
-    
-# Read Company Class 
-class CompanyRead(CompanyBase and CompanyCreate and CompanyUpdate and CompanyDelete):
-    super.__init__()
+class CompanyBase(Base):
+    id = Column(UUID(as_uuid=True), primary_key=True)
+    name = Column(String(100), max_length=100)
+    schema = Column(max_length=100)
+    createdAt = Column(DateTime(timezone=True), default=get_time_to_utc)
+    updatedAt = Column(DateTime(timezone=True), default=get_time_to_utc)
+    deletedAt = Column(DateTime(timezone=True), default=get_time_to_utc)

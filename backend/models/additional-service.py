@@ -1,51 +1,16 @@
-import datetime 
-import uuid 
-from sqlmodel import SQLModel, Field
-from utils.timestamps.DateTimeToUTC import get_time_to_utc
-from utils.utc_to_string import format_UTC_to_string
-
-"""" Debo agregar los types apenas defina cuales seran """
-TYPES = []
-
-class AdditionalServiceBase(SQLModel):
-    """ Clase Create Additional Service Base """ 
-    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
-    name: str = Field(max_length=100, nullable=False)
-    priceUF: float = Field(nullable=False)
-    type: enumerate = Field(TYPES, default=TYPES[0],  nullable=False)
-    
-class AdditionalServiceCreate(AdditionalServiceBase):
-    """ Class Create AdditionalService - Clase Create AdditionalService """
-    super.__init__()
-    createdAt: datetime = Field(default_factory=get_time_to_utc)
-
-class AdditionalServiceUpdate(AdditionalServiceCreate):
-    """ Class Create AdditionalServiceUpdate - Clase Create AdditionalServiceUpdate """
-    super.__init__()
-    updatedAt = datetime = Field(default_factory=get_time_to_utc)  
+""" ADDITIONAL SERVICE MODEL"""
+from sqlalchemy import Column, Numeric, Enum, DateTime, String
+from sqlalchemy.dialects.postgresql import UUID
+from models.conn_db import Base
+from utils.timestamps.date_time_to_utc import get_time_to_utc
 
 
-class AdditionalServiceRead(AdditionalServiceBase and AdditionalServiceCreate and AdditionalServiceUpdate):
-    """
-    Class Create AdditionalRead - Clase CreateAdditionalServiceRead
-    
-    PUNTO A CONSIDERAR: Aqui debo crear una funcion que al llamarla me permita solo la lectura
-                        Debe ir como parametro de clase y no como funcion ya que tendria que por cada funcion 
-                        generar esa variable o crear una funcon auxiliar 
-    """
-    super.__init__()
-     
-
-class AdditionalService(AdditionalServiceRead):
-    """
-    Class AdditionalService() - Clase AdditionalService
-    """
-    super.__init__()
-
-
-    
-
-
-
-
-    
+class AdditionalServiceBase(Base):
+    """ Clase Create Additional Service Base """
+    __tablename__ = 'additional_services'
+    id = Column(UUID, nullable=False, primary_key=True)
+    name = Column(String(100), nullable=False)
+    priceUF = Column(Numeric(precision=10, scale=2))
+    type = Column(Enum, nullable=False)
+    createdAt = Column(DateTime(timezone=True), default=get_time_to_utc)
+    updated_at = Column(DateTime(timezone=True), onupdate=get_time_to_utc)

@@ -1,56 +1,41 @@
-from sqlmodel import SQLModel, Field 
+
+from sqlalchemy import Column, Integer, String, Boolean, DateTime, Numeric, Enum
+from sqlalchemy.dialects.postgresql import UUID
+from models.conn_db import Base
 import uuid
 from utils.timestamps.DateTimeToUTC import get_time_to_utc
-from models.company import CompanyBase
-from models.supplier import SupplierBase
-import datetime 
+from backend.enums.productEnums import UNITS_ENUMS
 
-class ProductBase(SQLModel):
-    """ Clase ProductBase: Define clase base de Products
-        ProductBase Class: Define base class of products
+class ProductBase(Base):
+    __tablename__ = "products"
+    """ 
+    Clase ProductBase: Define clase base de Products
+    ProductBase Class: Define base class of products
     """
-    id: uuid.UUID = Field(primary_key=True, nullable=False)
-    name: str = Field(max_length=100, nullable=False)
-    description: str = Field(max_length=400)
+    id = Column(UUID(as_uuid=True), primary_key=True)
+    name = Column(String(100), nullable=False)
+    description = Column(String(250), max_length=400, nullable=True)
+    sku = Column(String(12), default=0, nullable=False)
+    stockQuantity = Column(Integer, default=0, nullable=False)
+    unit = Column(Enum, default=UNITS_ENUMS[0], nullable=False)
+    buyPrice = Column(Numeric, default=0.0, nullable=False)
+    salePrice = Column(Numeric, default=0.0, nullable=False)
+    minStockLevel = Column(Integer, default=0, nullable=True)
+    profitMargin = Column(Numeric, default=0.0, nullable=True)
+    status = Column(Boolean, default=False, nullable=False)
     
-# JSON NO A LA BD POR FAVOR 
-#featuresJSON = {
-#    'Control Stock Inventario': 0,
-#    'Boletas y Facturas Electronicas': 1,
-#    'Punto de Venta POS': 2,
-#    'Contactos': 4,
-#    'Gestion Proveedores': 5,
-#    'Notas Ventas': 6, 
-#    'Ordenes de Compra': 7,
-#    'Impuestos Adicionales': 8, 
-#    'Facturas de Compra': 9
-#    }
-
-#featuresList = [
-#    'Boletas y Facturas Electronicas',
-#    'Control Stock Inventario' 
-#    'Punto de Venta POS'
-#    'Contactos'
-#    'Gestion de Proveedores'
-#    'Notas de Venta' 
-#]
-class ProductFK(ProductBase): 
-    super.__init__()
-    companyId: uuid.UUID = Field(foreign_key=CompanyBase.id) 
-    supplierId: uuid.UUID = Field(foreign_key=SupplierBase.id)
-
 class ProductCreate(ProductBase):
     super.__init__()
-    createdAt: datetime = Field(default_factory=get_time_to_utc)
+    createdAt = Column(DateTime(timezone=True))
     #featuresDict: dict = Field(featuresJSON.items)
     #featuresList: list = Field(featuresList) 
 
 class ProductUpdate(ProductBase):
     super.__init__()
-    updatedAt: datetime = Field(default=get_time_to_utc)
+    updatedAt = Column(DateTime(timezone=True))
     
 class ProductDelete(ProductBase):
     """ Clase ProductDelete:  """
     super.__init__()
-    deletedAt: datetime = Field(default_factory=get_time_to_utc)
+    deletedAt = Column(DateTime(timezone=True))
 
